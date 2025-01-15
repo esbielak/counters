@@ -1,5 +1,6 @@
 export module CountersProcessor;
 
+import <compare>;
 import <cstdint>;
 import <functional>;
 import <iostream>;
