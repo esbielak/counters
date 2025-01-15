@@ -64,7 +64,7 @@ public:
           return;
         }
 
-        // TODO: print counter info
+        counters[c]->print();
       } else if (std::regex_match(line, match, send_signals_regex)) {
         uint_64_t c = std::stoull(match[2]);
 
@@ -85,6 +85,10 @@ private:
 
   void print_error(uint_64_t line_number) {
     std::cerr << "ERROR " << line_number << "\n";
+  }
+
+  void send_impulses(uint_64_t impulses) {
+
   }
 
   // create a regex to match commands of the format specified in the assignment:
