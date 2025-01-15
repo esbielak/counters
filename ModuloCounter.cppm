@@ -6,10 +6,10 @@ import <queue>;
 import <limits>;
 import <cstdint>;
 import Event;
-export class ModuloCounter : GenericCounter {
+export class ModuloCounter : public GenericCounter {
 
-using eventQueue_t = std::priority_queue<Event>;
-
+using eventQueue_t = std::priority_queue<Event, std::vector<Event>, 
+        std::greater<Event>>;
 private:
     uint64_t modulo;
     // counter, baseDivisor, baseCounter, id

@@ -7,10 +7,10 @@ import <limits>;
 import <cstdint>;
 
 // cmath
-export class GeometricCounter : GenericCounter {
+export class GeometricCounter : public GenericCounter {
 
-using eventQueue_t = std::priority_queue<Event>;
-
+using eventQueue_t = std::priority_queue<Event, std::vector<Event>, 
+        std::greater<Event>>;
 private:
     uint64_t power = 0; // max = 13
     // counter, baseDivisor, baseCounter, id

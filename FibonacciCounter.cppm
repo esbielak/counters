@@ -6,10 +6,10 @@ import <queue>;
 import <limits>;
 import <cstdint>;
 
-export class FibonacciCounter : GenericCounter {
+export class FibonacciCounter : public GenericCounter {
 
-using eventQueue_t = std::priority_queue<Event>;
-
+using eventQueue_t = std::priority_queue<Event, std::vector<Event>, 
+        std::greater<Event>>;
 private:
     uint64_t fibSmall, fibBig;
     bool stopped;
