@@ -21,7 +21,7 @@ protected:
 public:
     GenericCounter(uint64_t id, uint64_t base);
     virtual ~GenericCounter() {}
-    virtual void signal(uint64_t signals, eventQueue_t& prioQueue); // we put all events in the prioQueue passed as arg
+    virtual void signal(uint64_t signals, eventQueue_t& prioQueue) = 0; // we put all events in the prioQueue passed as arg
     void print();
 
 
