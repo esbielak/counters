@@ -13,6 +13,7 @@ import <unordered_map>;
 import <vector>
 
 import CounterModules;
+import Event;
 
 // TODO: we need a cleaner way, we shouldn't redefine it in every file
 using eventQueue_t = std::priority_queue<Event, std::vector<Event>, 
