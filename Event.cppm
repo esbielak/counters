@@ -6,7 +6,7 @@ import <iostream>;
 
 export class Event {
 public:
-  Event() noexcept {}
+  Event() noexcept : val(0), counter_id(0) {}
   Event(uint_64_t val, uint_64_t counter_id) noexcept
       : val(val), counter_id(counter_id) {}
 
@@ -18,11 +18,9 @@ public:
     return counter_id <=> other.counter_id;
   }
 
-  void print() const {
-    std::cout << "E " << counter_id << " " << val << "\n";
-  }
+  void print() const { std::cout << "E " << counter_id << " " << val << "\n"; }
 
 private:
   const uint_64_t val;
   const uint_64_t counter_id;
-}
+};
