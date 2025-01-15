@@ -31,20 +31,20 @@ GeometricCouter::GeometricCouter(uint64_t id, uint64_t base) :
 
 void GeometricCouter::signal(uint64_t signals, eventQueue_t& prioQueue) {
     uint64_t actualSignals;
-    uint64_t INTMAX = std::numeric_limits<uint64_t>::max();
-    signalConversion(signals, actualSignals, baseCounter);
+    uint64_t baseDelta;
+    signalConversion(signals, actualSignals, baseCounter, baseDelta);
     
     if (actualSignals < (uint64_t)pow(10, power) - counter) {
         counter += actualSignals;
         return;
     }
-    uint64_t delta = (uint64_t)pow(10, power) - counter; // time of first ev
-    prioQueue.push(Event(delta * (baseDivisor + 1 ), id));
+    uint64_t delta = (uint64_t)pow(10, power) - counter - 1; // time of first ev
+    prioQueue.push(Event(delta * (baseDivisor + 1 ) + baseDelta, id));
     uint64_t signalsLeft = actualSignals - delta;
     for (; signalsLeft > (uint64_t)pow(10, power); power = (power + 1) % 14) {
         signalsLeft -= (uint64_t)pow(10, power);
         delta += (uint64_t)pow(10, power);
-        prioQueue.push(Event(delta * (baseDivisor + 1), id));
+        prioQueue.push(Event(delta * (baseDivisor + 1) + baseDelta, id));
         
     }
     counter = signalsLeft;

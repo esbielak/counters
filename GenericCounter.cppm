@@ -13,7 +13,7 @@ export class GenericCounter {
 protected:
     uint64_t counter, id, baseDivisor, baseCounter;
     
-    void signalConversion(uint64_t signals, uint64_t& actualCount, uint64_t& newBaseCounter);
+    void signalConversion(uint64_t signals, uint64_t& actualCount, uint64_t& newBaseCounter, uint64_t& baseDelta);
 
 public:
     GenericCounter(uint64_t id, uint64_t base);
@@ -31,7 +31,8 @@ void GenericCounter::print() {
 }
 
 // calculates the amount of unignored signals and new currently-ignored-signals count
-void GenericCounter::signalConversion(uint64_t signals, uint64_t& actualSignals, uint64_t& newBaseCounter) {
+void GenericCounter::signalConversion(uint64_t signals, uint64_t& actualSignals, uint64_t& newBaseCounter, uint64_t& baseDelta) {
+    baseDelta = baseDivisor - baseCounter + 1;
     const uint64_t INTMAX = std::numeric_limits<uint64_t>::max();
     if (baseDivisor == INTMAX) {
         actualSignals = (baseCounter > INTMAX - signals ? 1 : 0);

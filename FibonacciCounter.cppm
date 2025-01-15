@@ -26,8 +26,9 @@ FibonacciCounter::FibonacciCounter(uint64_t id, uint64_t base) :
 void FibonacciCounter::signal(uint64_t signals, eventQueue_t& prioQueue) {
     if (!stopped) {
         uint64_t actualSignals;
+        uint64_t baseDelta;
         uint64_t INTMAX = std::numeric_limits<uint64_t>::max();
-        signalConversion(signals, actualSignals, baseCounter);
+        signalConversion(signals, actualSignals, baseCounter, baseDelta);
     
         if (fibSmall > INTMAX - fibBig) {
             if (counter > INTMAX - actualSignals) {
@@ -39,15 +40,15 @@ void FibonacciCounter::signal(uint64_t signals, eventQueue_t& prioQueue) {
             return;
         }
 
-        uint64_t delta = fibSmall + fibBig - counter + 1; // time of first event
+        uint64_t delta = fibSmall + fibBig - counter; // time of first event
         if (delta > actualSignals) {
             counter += actualSignals;
             return;
         }
-        prioQueue.push(Event(delta * (baseDivisor + 1), id));
+        prioQueue.push(Event(delta * (baseDivisor + 1) + baseDelta, id));
         uint64_t signalsLeft = actualSignals - delta;
         for (; fibSmall <= INTMAX - fibBig && signalsLeft >= fibSmall + fibBig + 1; signalsLeft -= (fibSmall + fibBig + 1)) {
-            prioQueue.push(Event((fibSmall + fibBig + 1 + delta) * (baseDivisor + 1), id));
+            prioQueue.push(Event((fibSmall + fibBig + 1 + delta) * (baseDivisor + 1) + baseDelta, id));
             delta += fibSmall + fibBig + 1;
             uint64_t help = fibBig;
             fibBig += fibSmall;

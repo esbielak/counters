@@ -24,24 +24,25 @@ ModuloCounter::ModuloCounter(uint64_t id, uint64_t base, uint64_t mod) :
 
 void ModuloCounter::signal(uint64_t signals, eventQueue_t& prioQueue)  {
     uint64_t actualSignals;
+    uint64_t baseDelta;
     uint64_t INTMAX = std::numeric_limits<uint64_t>::max();
-    signalConversion(signals, actualSignals, baseCounter);
+    signalConversion(signals, actualSignals, baseCounter, baseDelta);
     if (actualSignals <= modulo - counter) {
         counter += actualSignals;
     } else {
         // time of the first event - doesn't count ignored impulses
         if (modulo == INTMAX) {
             if (counter > INTMAX - actualSignals) {
-                prioQueue.push(Event((INTMAX - counter + 1) * (baseDivisor + 1), id));
+                prioQueue.push(Event((INTMAX - counter) * (baseDivisor + 1) + baseDelta, id));
             }
             counter += actualSignals; // overflow acts as expected
             return;
         }
 
-        uint64_t time = (modulo - counter + 1);
-        prioQueue.push(Event(time * (baseDivisor + 1), id));
+        uint64_t time = modulo - counter;
+        prioQueue.push(Event(time * (baseDivisor + 1) + baseDelta, id));
         for (; time <= actualSignals - modulo - 1; time += (modulo+1))
-            prioQueue.push(Event(time * (baseDivisor + 1), id));
+            prioQueue.push(Event(time * (baseDivisor + 1) + baseDelta, id));
         counter = actualSignals - time;
         
     }
