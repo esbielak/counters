@@ -16,7 +16,7 @@ private:
     // counter, baseDivisor, baseCounter, id
 public:
     FibonacciCounter(uint64_t id, uint64_t base);
-    void signal(uint64_t signals, std::priority_queue<>) override;
+    void signal(uint64_t signals, eventQueue_t&) override;
 
 };
 
