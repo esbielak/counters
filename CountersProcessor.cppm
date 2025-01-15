@@ -8,6 +8,8 @@ import <regex>;
 import <iostream>;
 import <stdexcept>;
 
+import CounterModules;
+
 export class CountersProcessor final {
 public:
   void process_input(std::string line, uint_64_t line_number) {
