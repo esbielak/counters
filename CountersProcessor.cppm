@@ -10,7 +10,7 @@ import <regex>;
 import <stdexcept>;
 import <string>;
 import <unordered_map>;
-import <vector>
+import <vector>;
 
 import CounterModules;
 import Event;
@@ -59,7 +59,7 @@ public:
         }
         uint64_t p = std::stoull(match[3]);
 
-        counters[c] = std::make_unique<GeodecimalCounter>(c, p);
+        counters[c] = std::make_unique<GeometricCounter>(c, p);
       } else if (std::regex_match(line, match, delete_regex)) {
         uint64_t c = std::stoull(match[2]);
         if (counters.clear(c) == 0) {
@@ -124,4 +124,4 @@ private:
 
     return std::regex(pattern);
   }
-}
+};

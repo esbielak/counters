@@ -1,4 +1,4 @@
-export module GeometricCouter;
+export module GeometricCounter;
 
 import GenericCounter;
 import Event;
@@ -7,7 +7,7 @@ import <limits>;
 import <cstdint>;
 
 // cmath
-export class GeometricCouter : GenericCounter {
+export class GeometricCounter : GenericCounter {
 
 using eventQueue_t = std::priority_queue<Event>;
 
@@ -21,15 +21,15 @@ private:
         return result;
     }
 public:
-    GeometricCouter(uint64_t id, uint64_t base);
+    GeometricCounter(uint64_t id, uint64_t base);
     void signal(uint64_t signals, eventQueue_t&) override;
 
 };
 
-GeometricCouter::GeometricCouter(uint64_t id, uint64_t base) : 
+GeometricCounter::GeometricCounter(uint64_t id, uint64_t base) : 
     GenericCounter(id, base) { }
 
-void GeometricCouter::signal(uint64_t signals, eventQueue_t& prioQueue) {
+void GeometricCounter::signal(uint64_t signals, eventQueue_t& prioQueue) {
     uint64_t actualSignals;
     uint64_t baseDelta;
     signalConversion(signals, actualSignals, baseCounter, baseDelta);
