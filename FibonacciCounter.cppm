@@ -5,6 +5,8 @@ import Event;
 import <queue>;
 import <limits>;
 import <cstdint>;
+import <vector>;
+import <functional>;
 
 export class FibonacciCounter : public GenericCounter {
 

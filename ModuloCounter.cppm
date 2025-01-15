@@ -5,6 +5,8 @@ import <iostream>;
 import <queue>;
 import <limits>;
 import <cstdint>;
+import <vector>;
+import <functional>;
 import Event;
 export class ModuloCounter : public GenericCounter {
 

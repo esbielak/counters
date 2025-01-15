@@ -4,7 +4,7 @@ PCHFLAGS    = -Wno-experimental-header-units -Wno-pragma-system-header-outside-h
 PCMFLAGS    = -Wno-experimental-header-units -fprebuilt-module-path=. --precompile
 CMFLAGS     = -fprebuilt-module-path=. -c
 HEADERS     =compare cstdint functional iostream limits memory queue regex stdexcept string vector unordered_map utility  
-MODULES     =CounterModules.pcm GenericCounter.pcm ModuloCounter.pcm Event.pcm CounterProcessor.pcm FibonacciCounter.pcm GeometricCounter.pcm
+MODULES     =CounterModules.pcm GenericCounter.pcm ModuloCounter.pcm Event.pcm CountersProcessor.pcm FibonacciCounter.pcm GeometricCounter.pcm
 TARGET      = counters
 
 PRECOMPILED_HEADERS = $(addsuffix .pch, $(HEADERS))
@@ -35,7 +35,7 @@ GenericCounter.pcm: Event.pcm
 ModuloCounter.pcm: GenericCounter.pcm Event.pcm
 FibonacciCounter.pcm: GenericCounter.pcm Event.pcm
 GeometricCounter.pcm: GenericCounter.pcm Event.pcm
-CounterProcessor.pcm: CounterModules.pcm Event.pcm
+CountersProcessor.pcm: CounterModules.pcm Event.pcm
 
 clean:
 	rm -rf $(TARGET) *.pch *.pcm *.o

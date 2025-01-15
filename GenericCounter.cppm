@@ -4,6 +4,8 @@ import <iostream>;
 import <queue>;
 import <limits>;
 import <cstdint>;
+import <vector>;
+import <functional>;
 import Event;
 
 using eventQueue_t = std::priority_queue<Event, std::vector<Event>, 
