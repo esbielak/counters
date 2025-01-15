@@ -62,7 +62,7 @@ public:
         counters[c] = std::make_unique<GeometricCounter>(c, p);
       } else if (std::regex_match(line, match, delete_regex)) {
         uint64_t c = std::stoull(match[2]);
-        if (counters.clear(c) == 0) {
+        if (counters.erase(c) == 0) {
           print_error(line_number);
           return;
         }
@@ -88,7 +88,7 @@ public:
 
 private:
   using counter_map_t =
-      std::unordered_map<unint_64_t, std::unique_ptr<GenericCounter>>;
+      std::unordered_map<uint64_t, std::unique_ptr<GenericCounter>>;
 
   counter_map_t counters;
 
@@ -100,7 +100,7 @@ private:
     eventQueue_t queue;
 
     for (auto& counter : counters) {
-      counter.second.signal(impulses, queue);
+      counter.second->signal(impulses, queue);
     }
 
     while (!queue.empty()) {
