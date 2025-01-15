@@ -24,6 +24,11 @@ $(TARGET).o: $(TARGET).cpp
 $(TARGET): $(TARGET).o $(MODULES) $(HEADERS)
 	$(CXX) $< $(MODULES) -o $@
 
+CounterModules.pcm: GenericCounter.pcm ModuloCounter.pcm
+GenericCounter.pcm: Event.pcm
+ModuloCounter.pcm: GenericCounter.pcm
+CounterProcessor.pcm: CounterModules.pcm Event.pcm
+
 counters:
 	# TODO:
 
