@@ -25,16 +25,20 @@ void ModuloCounter::signal(uint64_t signals, eventQueue_t& prioQueue) override {
     if (actualSignals <= modulo - counter) {
         counter += actualSignals;
     } else {
-        // another edge-case
+        // time of the first event - doesn't count ignored impulses
         if (modulo == INTMAX) {
-
+            if (counter > INTMAX - actualSignals) {
+                prioQueue.push(Event((INTMAX - counter + 1) * (baseDivisor + 1), id));
+            }
+            counter += actualSignals; // overflow acts as expected
             return;
         }
-        // time of the first event - doesn't count ignored impulses
+
         uint64_t time = (modulo - counter + 1);
-        Event event(time * (baseDivisor + 1), id);
-        prioQueue.push(event);
-        for (; time < actualSignals; time += (modulo+1))
+        prioQueue.push(Event(time * (baseDivisor + 1), id);
+        for (; time <= actualSignals - modulo - 1; time += (modulo+1))
+            prioQueue.push(Event(time * (baseDivisor + 1), id));
+        counter = actualSignals - time;
         
     }
 }
