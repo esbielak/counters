@@ -21,6 +21,6 @@ public:
   void print() const { std::cout << "E " << counter_id << " " << val << "\n"; }
 
 private:
-  const uint64_t val;
-  const uint64_t counter_id;
+  uint64_t val;
+  uint64_t counter_id;
 };
