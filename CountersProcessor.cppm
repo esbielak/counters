@@ -7,8 +7,14 @@ import <string>;
 import <regex>;
 import <iostream>;
 import <stdexcept>;
+import <functional>;
+import <queue>;
 
 import CounterModules;
+
+// TODO: we need a cleaner way, we shouldn't redefine it in every file
+using eventQueue_t = std::priority_queue<Event, std::vector<Event>, 
+        std::greater<Event>>;
 
 export class CountersProcessor final {
 public:
@@ -68,7 +74,7 @@ public:
       } else if (std::regex_match(line, match, send_signals_regex)) {
         uint_64_t c = std::stoull(match[2]);
 
-        // TODO: send impulses and print events
+        send_impulses(c);
       } else {
         print_error(line_number);
       }
@@ -88,7 +94,16 @@ private:
   }
 
   void send_impulses(uint_64_t impulses) {
+    eventQueue_t queue;
 
+    for (auto& counter : counters) {
+      counter.second.signal(impulses, queue);
+    }
+
+    while (!queue.empty()) {
+      queue.top().print();
+      queue.pop();
+    }
   }
 
   // create a regex to match commands of the format specified in the assignment:
