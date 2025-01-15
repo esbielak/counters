@@ -25,8 +25,8 @@ FibonacciCounter::FibonacciCounter(uint64_t id, uint64_t base) :
 
 void FibonacciCounter::signal(uint64_t signals, eventQueue_t& prioQueue) {
     if (!stopped) {
-        int64_t actualSignals;
-        int64_t INTMAX = std::numeric_limits<uint64_t>::max();
+        uint64_t actualSignals;
+        uint64_t INTMAX = std::numeric_limits<uint64_t>::max();
         signalConversion(signals, actualSignals, baseCounter);
     
         if (fibSmall > INTMAX - fibBig) {

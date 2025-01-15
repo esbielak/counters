@@ -30,8 +30,8 @@ GeometricCouter::GeometricCouter(uint64_t id, uint64_t base) :
     GenericCounter(id, base) { }
 
 void GeometricCouter::signal(uint64_t signals, eventQueue_t& prioQueue) {
-    int64_t actualSignals;
-    int64_t INTMAX = std::numeric_limits<uint64_t>::max();
+    uint64_t actualSignals;
+    uint64_t INTMAX = std::numeric_limits<uint64_t>::max();
     signalConversion(signals, actualSignals, baseCounter);
     
     if (actualSignals < (uint64_t)pow(10, power) - counter) {
