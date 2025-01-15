@@ -1,8 +1,10 @@
-import GenericCounter;
-import <queue>;
-import <vector>;
-import <limits>;
 export module FibonacciCounter;
+
+import GenericCounter;
+import Event;
+import <queue>;
+import <limits>;
+import <cstdint>;
 
 export class FibonacciCounter : GenericCounter {
 
@@ -21,7 +23,7 @@ public:
 FibonacciCounter::FibonacciCounter(uint64_t id, uint64_t base) : 
     GenericCounter(id, base), fibSmall(0), fibBig(1), stopped(false)  { }
 
-void FibonacciCounter::signal(uint64_t signals, eventQueue_t& prioQueue) override {
+void FibonacciCounter::signal(uint64_t signals, eventQueue_t& prioQueue) {
     if (!stopped) {
         int64_t actualSignals;
         int64_t INTMAX = std::numeric_limits<uint64_t>::max();

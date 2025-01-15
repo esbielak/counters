@@ -1,22 +1,17 @@
+export module GenericCounter;
+
 import <iostream>;
 import <queue>;
-import <vector>;
-import <utility>;
-import <functional>;
 import <limits>;
-
-// import export Event;
+import <cstdint>;
+import Event;
 
 using eventQueue_t = std::priority_queue<Event>;
 
-/*import iostream;
+export class GenericCounter {
 
-export module GenericCounter;
-// functional, vector, queue - need to precompile
-export*/ class GenericCounter {
-
-private:
-    uint64_t count, id, baseDivisor, baseCounter;
+protected:
+    uint64_t counter, id, baseDivisor, baseCounter;
     
     void signalConversion(uint64_t signals, uint64_t& actualCount, uint64_t& newBaseCounter);
 
@@ -29,10 +24,10 @@ public:
 
 };
 
-GenericCounter::GenericCounter(uint64_t id, uint64_t base) : count(0), id(id), baseDivisor(base), baseCounter(0) { }
+GenericCounter::GenericCounter(uint64_t id, uint64_t base) : counter(0), id(id), baseDivisor(base), baseCounter(0) { }
 
 void GenericCounter::print() {
-	std::cout << "C " << this->id << " " << this->count << "\n";
+	std::cout << "C " << this->id << " " << this->counter << "\n";
 }
 
 // calculates the amount of unignored signals and new currently-ignored-signals count
@@ -43,7 +38,6 @@ void GenericCounter::signalConversion(uint64_t signals, uint64_t& actualSignals,
         newBaseCounter += signals; // here the overflow is fine
     } else {
         uint64_t baseOverflow = 0;
-        uint64_t carry = 0;
         if (signals % (baseDivisor + 1) > INTMAX - baseCounter) {
             baseOverflow = 1; // temp int64_t overflow
             newBaseCounter = signals % (baseDivisor + 1) - (INTMAX - baseCounter);
