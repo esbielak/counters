@@ -23,45 +23,49 @@ public:
     try {
       if (std::regex_match(line, match, create_mod_regex)) {
         uint_64_t c = std::stoull(match[2]);
-        if (counters.contains(id)) {
+        if (counters.contains(c)) {
           print_error(line_number);
           return;
         }
         uint_64_t p = std::stoull(match[3]);
         uint_64_t m = std::stoull(match[4]);
-        // TODO: create modular counter
+
+        counters[c] = std::make_unique<ModuloCounter>(c, p, m);
       } else if (std::regex_match(line, match, create_fib_regex)) {
         uint_64_t c = std::stoull(match[2]);
-        if (counters.contains(id)) {
+        if (counters.contains(c)) {
           print_error(line_number);
           return;
         }
         uint_64_t p = std::stoull(match[3]);
-        // TODO: create fib counter
+
+        counters[c] = std::make_unique<FibonacciCounter>(c, p);
       } else if (std::regex_match(line, match, create_geo_regex)) {
         uint_64_t c = std::stoull(match[2]);
-        if (counters.contains(id)) {
+        if (counters.contains(c)) {
           print_error(line_number);
           return;
         }
         uint_64_t p = std::stoull(match[3]);
-        // TODO: create geo counter
+
+        counters[c] = std::make_unique<GeodecimalCounter>(c, p);
       } else if (std::regex_match(line, match, delete_regex)) {
         uint_64_t c = std::stoull(match[2]);
-        if (!counters.contains(id)) {
+        if (counters.clear(c) == 0) {
           print_error(line_number);
           return;
         }
-        // TODO: delete counter
       } else if (std::regex_match(line, match, counter_info_regex)) {
         uint_64_t c = std::stoull(match[2]);
-        if (!counters.contains(id)) {
+        if (!counters.contains(c)) {
           print_error(line_number);
           return;
         }
+
         // TODO: print counter info
       } else if (std::regex_match(line, match, send_signals_regex)) {
         uint_64_t c = std::stoull(match[2]);
+
         // TODO: send impulses and print events
       } else {
         print_error(line_number);
