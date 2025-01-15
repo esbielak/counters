@@ -18,7 +18,7 @@ using eventQueue_t = std::priority_queue<Event, std::vector<Event>,
 
 export class CountersProcessor final {
 public:
-  void process_input(std::string& line, uint_64_t line_number) {
+  void process_input(const std::string& line, uint_64_t line_number) {
     static std::regex create_mod_regex = create_line_regex("M", 3);
     static std::regex create_fib_regex = create_line_regex("F", 2);
     static std::regex create_geo_regex = create_line_regex("G", 2);
