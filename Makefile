@@ -7,6 +7,8 @@ HEADERS     = compare cstdint functional iostream limits memory queue regex stde
 MODULES     = GenericCounter.o
 TARGET      = counters
 
+all: counters
+
 iostream.pch: iostream
 	$(CXX) $(CXXFLAGS) $(PCHFLAGS) $< -o $@
 
@@ -21,6 +23,9 @@ $(TARGET).o: $(TARGET).cpp
 
 $(TARGET): $(TARGET).o $(MODULES) $(HEADERS)
 	$(CXX) $< $(MODULES) -o $@
+
+counters:
+	# TODO:
 
 clean:
 	rm -rf counters *.pch *.pcm *.o
