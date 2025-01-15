@@ -1,7 +1,7 @@
 export module Event;
 
-import <cstdint>;
 import <compare>;
+import <cstdint>;
 import <iostream>;
 
 export class Event {
