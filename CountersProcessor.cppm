@@ -1,14 +1,14 @@
 export module CountersProcessor;
 
-import <unordered_map>;
-import <memory>;
 import <cstdint>;
-import <string>;
-import <regex>;
-import <iostream>;
-import <stdexcept>;
 import <functional>;
+import <iostream>;
+import <memory>;
 import <queue>;
+import <regex>;
+import <stdexcept>;
+import <string>;
+import <unordered_map>;
 import <vector>
 
 import CounterModules;
