@@ -6,6 +6,7 @@ import <cstdint>;
 import <string>;
 import <regex>;
 import <iostream>;
+import <stdexcept>;
 
 export class CountersProcessor final {
 public:
@@ -17,15 +18,68 @@ public:
     static std::regex counter_info_regex = create_line_regex("P", 1);
     static std::regex send_signals_regex = create_line_regex("A", 1);
 
-    // match against some regexes
-    // print error if input is invalid
+    // TODO: maybe there is cleaner way
+    std::smatch match;
+    try {
+      if (std::regex_match(line, match, create_mod_regex)) {
+        uint_64_t c = std::stoull(match[2]);
+        if (counters.contains(id)) {
+          print_error(line_number);
+          return;
+        }
+        uint_64_t p = std::stoull(match[3]);
+        uint_64_t m = std::stoull(match[4]);
+        // TODO: create modular counter
+      } else if (std::regex_match(line, match, create_fib_regex)) {
+        uint_64_t c = std::stoull(match[2]);
+        if (counters.contains(id)) {
+          print_error(line_number);
+          return;
+        }
+        uint_64_t p = std::stoull(match[3]);
+        // TODO: create fib counter
+      } else if (std::regex_match(line, match, create_geo_regex)) {
+        uint_64_t c = std::stoull(match[2]);
+        if (counters.contains(id)) {
+          print_error(line_number);
+          return;
+        }
+        uint_64_t p = std::stoull(match[3]);
+        // TODO: create geo counter
+      } else if (std::regex_match(line, match, delete_regex)) {
+        uint_64_t c = std::stoull(match[2]);
+        if (!counters.contains(id)) {
+          print_error(line_number);
+          return;
+        }
+        // TODO: delete counter
+      } else if (std::regex_match(line, match, counter_info_regex)) {
+        uint_64_t c = std::stoull(match[2]);
+        if (!counters.contains(id)) {
+          print_error(line_number);
+          return;
+        }
+        // TODO: print counter info
+      } else if (std::regex_match(line, match, send_signals_regex)) {
+        uint_64_t c = std::stoull(match[2]);
+        // TODO: send impulses and print events
+      } else {
+        print_error(line_number);
+      }
+    } catch (std::out_of_range a) {
+      print_error(line_number);
+    }
   }
 
 private:
   using counter_map_t =
-      std::unordered_map<int, std::unique_ptr<GenericCounter>>;
+      std::unordered_map<unint_64_t, std::unique_ptr<GenericCounter>>;
 
   counter_map_t counters;
+
+  void print_error(uint_64_t line_number) {
+    std::cerr << "ERROR " << line_number << "\n";
+  }
 
   // create a regex to match commands of the format specified in the assignment:
   // a match is a line starting with command_id followed by cnt numbers
@@ -33,8 +87,9 @@ private:
   static std::regex create_line_regex(std::string command_id, int cnt) {
     std::string pattern = "^(" + command_id + ")";
 
+    // TODO: do we accept leading zeros?
     for (int i = 0; i < cnt; ++i) {
-      pattern += " (\\d+)";
+      pattern += " ((0|[1-9]\\d*))";
     }
 
     pattern += "$";
