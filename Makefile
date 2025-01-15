@@ -22,3 +22,7 @@ $(TARGET).o: $(TARGET).cpp
 $(TARGET): $(TARGET).o $(MODULES) $(HEADERS)
 	$(CXX) $< $(MODULES) -o $@
 
+clean:
+	rm -rf counters *.pch *.pcm *.o
+
+.PHONY: all clean
