@@ -7,7 +7,7 @@ import <iostream>;
 export class Event {
 public:
   Event() noexcept : val(0), counter_id(0) {}
-  Event(uint_64_t val, uint_64_t counter_id) noexcept
+  Event(uint64_t val, uint64_t counter_id) noexcept
       : val(val), counter_id(counter_id) {}
 
   auto operator<=>(const Event &other) const noexcept {
@@ -21,6 +21,6 @@ public:
   void print() const { std::cout << "E " << counter_id << " " << val << "\n"; }
 
 private:
-  const uint_64_t val;
-  const uint_64_t counter_id;
+  const uint64_t val;
+  const uint64_t counter_id;
 };
