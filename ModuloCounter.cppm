@@ -32,12 +32,11 @@ void ModuloCounter::signal(uint64_t signals, eventQueue_t& prioQueue)  {
     if (actualSignals <= modulo - counter) {
         counter += actualSignals;
     } else {
-        // time of the first event - doesn't count ignored impulses
         if (modulo == INTMAX) {
             if (counter > INTMAX - actualSignals) {
                 prioQueue.push(Event((INTMAX - counter) * (baseDivisor + 1) + baseDelta, id));
             }
-            counter += actualSignals; // overflow acts as expected
+            counter += actualSignals;
             return;
         }
 

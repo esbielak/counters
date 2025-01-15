@@ -4,7 +4,7 @@ PCHFLAGS    = -Wno-pragma-system-header-outside-header -xc++-system-header --pre
 PCMFLAGS    = -fprebuilt-module-path=. --precompile
 CMFLAGS     = -fprebuilt-module-path=. -c
 HEADERS     =compare cstdint functional iostream limits memory queue regex stdexcept string vector unordered_map utility  
-MODULES     =CounterModules.pcm GenericCounter.pcm ModuloCounter.pcm Event.pcm CountersProcessor.pcm FibonacciCounter.pcm GeometricCounter.pcm
+MODULES     =CounterModules.pcm GenericCounter.pcm ModuloCounter.pcm Event.pcm CountersProcessor.pcm FibonacciCounter.pcm GeometricCounter.pcm counters.pcm
 TARGET      = counters
 
 PRECOMPILED_HEADERS = $(addsuffix .pch, $(HEADERS))
@@ -23,19 +23,17 @@ all: $(TARGET)
 %.o: %.pcm
 	$(CXX) $(CXXFLAGS) $(CMFLAGS) $< -o $@
 
-counters.o: counters.cpp CountersProcessor.pcm $(PRECOMPILED_HEADERS)
-	$(CXX) $(CXXFLAGS) $(CMFLAGS) $(addprefix -fmodule-file=, $(PRECOMPILED_HEADERS)) $< -o $@
-
 $(TARGET): $(OBJS)
 	$(CXX) $^ -o $@
 
 # Module dependencies
-CounterModules.pcm: GenericCounter.pcm ModuloCounter.pcm FibonacciCounter.pcm GeometricCounter.pcm
-GenericCounter.pcm: Event.pcm
-ModuloCounter.pcm: GenericCounter.pcm Event.pcm
-FibonacciCounter.pcm: GenericCounter.pcm Event.pcm
-GeometricCounter.pcm: GenericCounter.pcm Event.pcm
-CountersProcessor.pcm: CounterModules.pcm Event.pcm 
+CounterModules.pcm: GenericCounter.pcm ModuloCounter.pcm FibonacciCounter.pcm GeometricCounter.pcm $(PRECOMPILED_HEADERS)
+GenericCounter.pcm: Event.pcm $(PRECOMPILED_HEADERS)
+ModuloCounter.pcm: GenericCounter.pcm Event.pcm $(PRECOMPILED_HEADERS)
+FibonacciCounter.pcm: GenericCounter.pcm Event.pcm $(PRECOMPILED_HEADERS)
+GeometricCounter.pcm: GenericCounter.pcm Event.pcm $(PRECOMPILED_HEADERS)
+CountersProcessor.pcm: CounterModules.pcm Event.pcm $(PRECOMPILED_HEADERS)
+counters.pcm: CountersProcessor.pcm $(PRECOMPILED_HEADERS)
 
 clean:
 	rm -rf $(TARGET) *.pch *.pcm *.o
