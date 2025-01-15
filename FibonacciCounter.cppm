@@ -6,7 +6,7 @@ export module FibonacciCounter;
 
 export class FibonacciCounter : GenericCounter {
 
-using eventQueue_t = std::priority_queue<Event, std::vector<Event>, std::greater<Event>>;
+using eventQueue_t = std::priority_queue<Event>;
 
 private:
     uint64_t fibSmall, fibBig;

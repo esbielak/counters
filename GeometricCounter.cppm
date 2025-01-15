@@ -1,5 +1,5 @@
 import GenericCounter;
-import <cmath>;
+
 import <vector>;
 import <queue>;
 import <limits>;
@@ -9,11 +9,17 @@ export module GeometricCouter;
 // cmath
 export class GeometricCouter : GenericCounter {
 
-using eventQueue_t = std::priority_queue<Event, std::vector<Event>, std::greater<Event>>;
+using eventQueue_t = std::priority_queue<Event>;
 
 private:
     uint64_t power = 0; // max = 13
     // counter, baseDivisor, baseCounter, id
+    uint64_t pow(uint64_t base, uint64_t exp) {
+        uint64_t result = 1;
+        for (uint64_t i = 0; i < exp; i++)
+            result *= base;
+        return result;
+    }
 public:
     GeometricCouter(uint64_t id, uint64_t base);
     void signal(uint64_t signals, std::priority_queue<>) override;

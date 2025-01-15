@@ -7,8 +7,7 @@ import <limits>;
 
 // import export Event;
 
-using eventQueue_t = std::priority_queue<Event, std::vector<Event>, 
-        std::greater<Event>>;
+using eventQueue_t = std::priority_queue<Event>;
 
 /*import iostream;
 
