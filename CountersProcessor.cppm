@@ -9,6 +9,7 @@ import <iostream>;
 import <stdexcept>;
 import <functional>;
 import <queue>;
+import <vector>
 
 import CounterModules;
 
