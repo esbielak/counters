@@ -4,8 +4,7 @@ export module ModuloCounter;
 
 export class ModuloCounter : GenericCounter {
 
-using event_t = std::pair<uint64_t, uint64_t>;
-using eventQueue_t = std::priority_queue<event_t, std::vector<event_t>, std::greater>;
+using eventQueue_t = std::priority_queue<Event, std::vector<Event>, std::greater<Event>>;
 
 private:
     uint64_t modulo;
@@ -33,7 +32,7 @@ void ModuloCounter::signal(uint64_t signals, eventQueue_t& prioQueue) override {
         }
         // time of the first event - doesn't count ignored impulses
         uint64_t time = (modulo - counter + 1);
-        event_t event(time * (baseDivisor + 1), id);
+        Event event(time * (baseDivisor + 1), id);
         prioQueue.push(event);
         for (; time < actualSignals; time += (modulo+1))
         

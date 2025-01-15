@@ -5,8 +5,10 @@
 #include <functional>
 #include <limits>
 
-using eventQueue_t = std::priority_queue<std::pair<uint64_t, uint64_t>, std::vector<std::pair<uint64_t, uint64_t>>, 
-        std::greater<std::pair<uint64_t, uint64_t>>>;
+// import export Event;
+
+using eventQueue_t = std::priority_queue<Event, std::vector<Event>, 
+        std::greater<Event>>;
 
 /*import iostream;
 
