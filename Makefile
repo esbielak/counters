@@ -3,7 +3,7 @@ CXXFLAGS    = -std=c++20 -O2 -Wall -Wextra
 PCHFLAGS    = -Wno-experimental-header-units -Wno-pragma-system-header-outside-header -xc++-system-header --precompile
 PCMFLAGS    = -Wno-experimental-header-units -fprebuilt-module-path=. --precompile -fmodule-file=
 CMFLAGS     = -fprebuilt-module-path. -c
-HEADERS     = iostream string cstdint compare unordered_map memory regex stdexcept functional queue vector utility limits
+HEADERS     = compare cstdint functional iostream limits memory queue regex stdexcept string vector unordered_map utility 
 MODULES     = GenericCounter.o
 TARGET      = counters
 
