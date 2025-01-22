@@ -15,7 +15,6 @@ using eventQueue_t = std::priority_queue<Event, std::vector<Event>,
 private:
     uint64_t fibSmall, fibBig;
     bool stopped;
-    // counter, baseDivisor, baseCounter, id
 public:
     FibonacciCounter(uint64_t id, uint64_t base);
     void signal(uint64_t signals, eventQueue_t&) override;
@@ -42,7 +41,7 @@ void FibonacciCounter::signal(uint64_t signals, eventQueue_t& prioQueue) {
             return;
         }
 
-        uint64_t delta = fibSmall + fibBig - counter; // time of first event
+        uint64_t delta = fibSmall + fibBig - counter;
         if (delta > actualSignals) {
             counter += actualSignals;
             return;

@@ -8,14 +8,12 @@ import <cstdint>;
 import <vector>;
 import <functional>;
 
-// cmath
 export class GeometricCounter : public GenericCounter {
 
 using eventQueue_t = std::priority_queue<Event, std::vector<Event>, 
         std::greater<Event>>;
 private:
     uint64_t power = 0; // max = 13
-    // counter, baseDivisor, baseCounter, id
     uint64_t pow(uint64_t base, uint64_t exp) {
         uint64_t result = 1;
         for (uint64_t i = 0; i < exp; i++)
@@ -40,7 +38,7 @@ void GeometricCounter::signal(uint64_t signals, eventQueue_t& prioQueue) {
         counter += actualSignals;
         return;
     }
-    uint64_t delta = (uint64_t)pow(10, power) - counter - 1; // time of first ev
+    uint64_t delta = (uint64_t)pow(10, power) - counter - 1;
     prioQueue.push(Event(delta * (baseDivisor + 1 ) + baseDelta, id));
     uint64_t signalsLeft = actualSignals - delta;
     for (; signalsLeft > (uint64_t)pow(10, power); power = (power + 1) % 14) {
