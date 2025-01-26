@@ -40,7 +40,6 @@ public:
         }
         uint64_t p = std::stoull(match[3]);
         uint64_t m = std::stoull(match[4]);
-
         counters[c] = std::make_unique<ModuloCounter>(c, p, m);
       } else if (std::regex_match(line, match, create_fib_regex)) {
         uint64_t c = std::stoull(match[2]);
