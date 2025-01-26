@@ -41,10 +41,14 @@ void ModuloCounter::signal(uint64_t signals, eventQueue_t& prioQueue)  {
         }
 
         uint64_t time = modulo - counter;
-        prioQueue.push(Event(time * (baseDivisor + 1) + baseDelta, id));
-        for (; time <= actualSignals - modulo - 1; time += (modulo+1))
+        //prioQueue.push(Event(time * (baseDivisor + 1) + baseDelta, id));
+        //std::cout << actualSignals << " " << time << std::endl;
+        for (; time <= actualSignals; time += (modulo+1)) {
+            //std::cout << "currtime: " << time << "act: " << (actualSignals - modulo - 1) <<std::endl;
             prioQueue.push(Event(time * (baseDivisor + 1) + baseDelta, id));
-        counter = actualSignals - time;
+        }
+        // only if the for loop body was executed at least once
+        counter = actualSignals - time - modulo - 1;
         
     }
 }
