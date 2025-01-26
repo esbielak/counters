@@ -22,13 +22,15 @@ public:
 };
 
 ModuloCounter::ModuloCounter(uint64_t id, uint64_t base, uint64_t mod) : 
-    GenericCounter(id, base), modulo(mod) { }
+    GenericCounter(id, base), modulo(mod) { std::cout << id << "," << base << "," << mod << std::endl;}
 
 void ModuloCounter::signal(uint64_t signals, eventQueue_t& prioQueue)  {
+    std::cout << "============ signal" << signals << std::endl;
     uint64_t actualSignals;
     uint64_t baseDelta;
     uint64_t INTMAX = std::numeric_limits<uint64_t>::max();
     signalConversion(signals, actualSignals, baseCounter, baseDelta);
+    std::cout << "as" << actualSignals << "baseC" << baseCounter << "bD" << baseDelta << std::endl;
     if (actualSignals <= modulo - counter) {
         counter += actualSignals;
     } else {
@@ -42,13 +44,13 @@ void ModuloCounter::signal(uint64_t signals, eventQueue_t& prioQueue)  {
 
         uint64_t time = modulo - counter;
         //prioQueue.push(Event(time * (baseDivisor + 1) + baseDelta, id));
-        //std::cout << actualSignals << " " << time << std::endl;
+        std::cout << actualSignals << " time first value" << time << std::endl;
         for (; time <= actualSignals; time += (modulo+1)) {
-            //std::cout << "currtime: " << time << "act: " << (actualSignals - modulo - 1) <<std::endl;
+            std::cout << "currtime: " << time <<std::endl;
             prioQueue.push(Event(time * (baseDivisor + 1) + baseDelta, id));
         }
         // only if the for loop body was executed at least once
-        counter = actualSignals - time - modulo - 1;
+        counter = actualSignals - (time - modulo - 1);
         
     }
 }
